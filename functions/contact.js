@@ -12,7 +12,7 @@ exports.handler = (event, context, callback) => {
   }
 
   axios(
-    `https://api.telegram.org/bot${process.env.BOT_API_KEY}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${text}`
+    `https://api.telegram.org/bot${process.env.BOT_API_KEY}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${encodeURIComponent(text)}`
   )
     .then(() => {
       callback(null, {
@@ -22,7 +22,7 @@ exports.handler = (event, context, callback) => {
     })
     .catch(e => {
       callback(null, {
-        statusCode: 200,
+        statusCode: 500,
         body: JSON.stringify({ message: e.message })
       })
     })
